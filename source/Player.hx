@@ -22,6 +22,8 @@ class Player extends FlxSprite {
 
     loadGraphic(AssetPaths.player__png, true, 32, 32);
 
+    color = 0x00ff00;
+
     drag.x = H_DRAG;
     drag.y = V_DRAG;
   }
