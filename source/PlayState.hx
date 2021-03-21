@@ -20,6 +20,7 @@ class PlayState extends FlxState {
   }
 
   override public function update(elapsed: Float) {
+    player.updatePlayState(elapsed, this);
     super.update(elapsed);
   }
 }

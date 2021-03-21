@@ -2,6 +2,7 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
 
 class Player extends FlxSprite {
@@ -9,8 +10,12 @@ class Player extends FlxSprite {
   static inline var V_SPEED: Int = 150;
   static inline var H_DRAG: Int = 1000;
   static inline var V_DRAG: Int = 300;
+  static inline var INTIAL_FIRE_DELAY: Float = 0.1;
 
-  public function new(x:Float = 0, y:Float = 0) {
+  var fireDelay: Float = INTIAL_FIRE_DELAY;
+  var fireDelayElapsed: Float = INTIAL_FIRE_DELAY;
+
+  public function new(x: Float = 0, y: Float = 0) {
     super(x, y);
 
     makeGraphic(32, 32, FlxColor.LIME);
@@ -22,6 +27,10 @@ class Player extends FlxSprite {
   override function update(elapsed: Float) {
     updateMovement();
     super.update(elapsed);
+  }
+
+  public function updatePlayState(elapsed: Float, playState: PlayState) {
+    updateFire(elapsed, playState);
   }
 
   function updateMovement() {
@@ -49,5 +58,24 @@ class Player extends FlxSprite {
     if (left || right) {
       velocity.x = right ? H_SPEED : -H_SPEED;
     }
+  }
+
+  function updateFire(elapsed: Float, playState: PlayState) {
+    var firing: Bool = FlxG.keys.anyPressed([SPACE]);
+
+    fireDelayElapsed += elapsed;
+
+    if (!firing) return;
+    if (fireDelayElapsed <= fireDelay) return;
+
+    fireDelayElapsed = 0;
+
+    var bullet = new Bullet(
+      x + width / 2,
+      y - 5,
+      new FlxPoint(0, -300)
+    );
+
+    playState.add(bullet);
   }
 }
