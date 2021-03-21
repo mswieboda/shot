@@ -13,6 +13,7 @@ class Bullet extends FlxSprite {
 
     makeGraphic(4, 8, FlxColor.LIME);
 
+    this.x -= width / 2;
     drag.y = V_DRAG;
     this.velocity = velocity;
   }

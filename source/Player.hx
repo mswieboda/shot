@@ -20,7 +20,7 @@ class Player extends FlxSprite {
   public function new(x: Float = 0, y: Float = 0) {
     super(x, y);
 
-    makeGraphic(32, 32, FlxColor.LIME);
+    loadGraphic(AssetPaths.player__png, true, 32, 32);
 
     drag.x = H_DRAG;
     drag.y = V_DRAG;
@@ -76,7 +76,7 @@ class Player extends FlxSprite {
 
     var bullet = new Bullet(
       x + width / 2,
-      y - 5,
+      y,
       new FlxPoint(0, -300)
     );
 
