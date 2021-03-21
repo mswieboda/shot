@@ -2,6 +2,7 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
 
@@ -12,6 +13,7 @@ class Player extends FlxSprite {
   static inline var V_DRAG: Int = 300;
   static inline var INTIAL_FIRE_DELAY: Float = 0.1;
 
+  public var bullets: FlxTypedGroup<Bullet> = new FlxTypedGroup<Bullet>();
   var fireDelay: Float = INTIAL_FIRE_DELAY;
   var fireDelayElapsed: Float = INTIAL_FIRE_DELAY;
 
@@ -26,11 +28,9 @@ class Player extends FlxSprite {
 
   override function update(elapsed: Float) {
     updateMovement();
-    super.update(elapsed);
-  }
+    updateFire(elapsed);
 
-  public function updatePlayState(elapsed: Float, playState: PlayState) {
-    updateFire(elapsed, playState);
+    super.update(elapsed);
   }
 
   function updateMovement() {
@@ -60,10 +60,14 @@ class Player extends FlxSprite {
     }
   }
 
-  function updateFire(elapsed: Float, playState: PlayState) {
+  function updateFire(elapsed: Float) {
     var firing: Bool = FlxG.keys.anyPressed([SPACE]);
 
     fireDelayElapsed += elapsed;
+
+    bullets.forEachDead(function (bullet) {
+      bullets.remove(bullet, true);
+    });
 
     if (!firing) return;
     if (fireDelayElapsed <= fireDelay) return;
@@ -76,6 +80,6 @@ class Player extends FlxSprite {
       new FlxPoint(0, -300)
     );
 
-    playState.add(bullet);
+    bullets.add(bullet);
   }
 }

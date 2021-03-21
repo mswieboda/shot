@@ -15,12 +15,8 @@ class PlayState extends FlxState {
     player.y = FlxG.height - player.height * 2;
 
     add(player);
+    add(player.bullets);
 
     super.create();
-  }
-
-  override public function update(elapsed: Float) {
-    player.updatePlayState(elapsed, this);
-    super.update(elapsed);
   }
 }
