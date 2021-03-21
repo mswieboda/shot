@@ -11,7 +11,9 @@ class Bullet extends FlxSprite {
   public function new(x: Float = 0, y: Float = 0, velocity: FlxPoint) {
     super(x, y);
 
-    makeGraphic(4, 8, FlxColor.LIME);
+    loadGraphic(AssetPaths.bullet__png, true, 8, 16);
+
+    color = 0x00ff00;
 
     this.x -= width / 2;
     drag.y = V_DRAG;
