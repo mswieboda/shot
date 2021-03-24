@@ -5,11 +5,7 @@ import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.util.FlxColor;
 
-class Player extends FlxSprite {
-  static inline var H_SPEED: Int = 250;
-  static inline var V_SPEED: Int = 150;
-  static inline var H_DRAG: Int = 1000;
-  static inline var V_DRAG: Int = 300;
+class Player extends Ship {
   static inline var INTIAL_FIRE_DELAY: Float = 0.1;
 
   public var bullets: FlxTypedGroup<Bullet> = new FlxTypedGroup<Bullet>();
@@ -18,17 +14,19 @@ class Player extends FlxSprite {
   var fireDelayElapsed: Float = INTIAL_FIRE_DELAY;
   var fireType: FireType = new FireSingle(null);
 
-  public function new(x: Float = 0, y: Float = 0) {
-    super(x, y);
+  public function new(
+    ?x: Float = 0,
+    ?y: Float = 0,
+    ?asset: String = AssetPaths.player__png,
+    ?color: FlxColor = 0x00ff00,
+    ?width: Int = 32,
+    ?height: Int = 32,
+    ?animated: Bool = false,
+    ?angle: Float = 0
+  ) {
+    super(x, y, asset, color, width, height, animated, angle);
 
     fireType = new FireSingle(this);
-
-    loadGraphic(AssetPaths.player__png, true, 32, 32);
-
-    color = 0x00ff00;
-
-    drag.x = H_DRAG;
-    drag.y = V_DRAG;
   }
 
   override function update(elapsed: Float) {
@@ -57,11 +55,11 @@ class Player extends FlxSprite {
     if (!up && !down && !left && !right) return;
 
     if (up || down) {
-      velocity.y = down ? V_SPEED : -V_SPEED;
+      velocity.y = down ? vSpeed() : -vSpeed();
     }
 
     if (left || right) {
-      velocity.x = right ? H_SPEED : -H_SPEED;
+      velocity.x = right ? hSpeed() : -hSpeed();
     }
   }
 

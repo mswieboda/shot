@@ -3,9 +3,11 @@ package;
 import flixel.FlxG;
 import flixel.FlxState;
 import flixel.util.FlxAxes;
+import flixel.group.FlxGroup.FlxTypedGroup;
 
 class PlayState extends FlxState {
   var player: Player;
+  var enemies: FlxTypedGroup<Enemy> = new FlxTypedGroup<Enemy>();
 
   override public function create() {
     player = new Player();
@@ -14,6 +16,19 @@ class PlayState extends FlxState {
     player.screenCenter(FlxAxes.X);
     player.y = FlxG.height - player.height * 2;
 
+    // enemies
+    var enemies = [
+      new Enemy(100, 100, 0xff0000),
+      new Enemy(300, 100, 0x0000ff),
+      new Enemy(500, 100, 0x00ffff)
+    ];
+
+    for (enemy in enemies) {
+      this.enemies.add(enemy);
+    }
+
+    // specific drawing layered order
+    add(this.enemies);
     add(player);
     add(player.bullets);
 
