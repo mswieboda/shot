@@ -1,6 +1,7 @@
 package;
 
 import flixel.FlxG;
+import flixel.FlxObject;
 import flixel.FlxState;
 import flixel.util.FlxAxes;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -33,5 +34,15 @@ class PlayState extends FlxState {
     add(player.bullets);
 
     super.create();
+  }
+
+  override function update(elapsed: Float) {
+    checkCollisions();
+
+    super.update(elapsed);
+  }
+
+  function checkCollisions() {
+    FlxG.overlap(enemies, player.bullets, Enemy.collide, FlxObject.updateTouchingFlags);
   }
 }

@@ -18,4 +18,13 @@ class Enemy extends Ship {
   ) {
     super(x, y, asset, color, width, height, animated, angle);
   }
+
+  static public function collide(enemy: Dynamic, bullet: Dynamic) {
+    enemy.hit(bullet);
+  }
+
+  function hit(bullet: Bullet) {
+    hurt(bullet.damage);
+    bullet.kill();
+  }
 }

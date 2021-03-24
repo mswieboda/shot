@@ -28,6 +28,9 @@ class Ship extends FlxSprite {
     this.angle = angle;
     this.color = color;
 
+    // don't move from collisions
+    this.immovable = true;
+
     drag.x = H_DRAG;
     drag.y = V_DRAG;
   }
