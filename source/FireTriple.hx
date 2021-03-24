@@ -2,7 +2,7 @@ package;
 
 import flixel.math.FlxPoint;
 
-class FireTriple extends FireDouble {
+class FireTriple extends FireSingle {
   public function new(player: Player) {
     super(player);
   }
